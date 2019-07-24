@@ -1,14 +1,13 @@
 import React from 'react';
 
-import { StyleSheet, View } from 'react-native';
-import { Avatar, Text, Button } from 'react-native-elements';
-import Icon from 'react-native-vector-icons/FontAwesome';
+import { StyleSheet, View, SafeAreaView } from 'react-native';
+import { Avatar, Text, Button, Icon } from 'react-native-elements';
 
 function CustomDrawer({ navigation }) {
   const { navigate, closeDrawer } = navigation;
 
-  return(
-    <View style={styles.menu}>
+  return (
+    <SafeAreaView style={styles.menu}>
       <View style={styles.menuTop}>
         <View style={styles.menuTopAvatar}>
           <Avatar
@@ -37,38 +36,38 @@ function CustomDrawer({ navigation }) {
         </View>
       </View>
       <View style={styles.menuContent}>
-      <Button
-        icon={
-          <Icon
-            name="calendar"
-            size={24}
-            color="black"
-            style={styles.icon}
-          />
-        }
-        style={styles.button}
-        type="clear"
-        title="Planning Rules"
-        titleStyle={styles.textButton}
-        onPress={() => navigate('Planning Rules')}
-      />
-      <Button
-        icon={
-          <Icon
-            name="bar-chart-o"
-            size={24}
-            color="black"
-            style={styles.icon}
-          />
-        }
-        style={styles.button}
-        type="clear"
-        title="Sales"
-        titleStyle={styles.textButton}
-        onPress={() => navigate('Home')}
-      />
+        <Button
+          icon={
+            <Icon
+              name="view-carousel"
+              size={24}
+              color="black"
+              style={styles.icon}
+            />
+          }
+          style={styles.button}
+          type="clear"
+          title="Planning Rules"
+          titleStyle={styles.textButton}
+          onPress={() => navigate('Planning Rules')}
+        />
+        <Button
+          icon={
+            <Icon
+              name="trending-up"
+              size={24}
+              color="black"
+              style={styles.icon}
+            />
+          }
+          style={styles.button}
+          type="clear"
+          title="Sales"
+          titleStyle={styles.textButton}
+          onPress={() => navigate('Home')}
+        />
       </View>
-    </View>
+    </SafeAreaView>
   )
 }
 
@@ -98,13 +97,14 @@ const styles = StyleSheet.create({
   },
   textUser: {
     alignSelf: 'center',
-    marginLeft: 10,
+    marginLeft: 20,
     fontSize: 20,
     //fontWeight: '500',
   },
   textButton: {
     color: 'black',
     fontSize: 15,
+    paddingLeft: 10,
   },
   button: {
     justifyContent: 'flex-start',
@@ -113,7 +113,7 @@ const styles = StyleSheet.create({
     marginBottom: 15,
   },
   icon: {
-    paddingRight: 5,
+    marginRight: 15,
     minWidth: 50,
   }
 });

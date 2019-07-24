@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, View, Image } from 'react-native';
+import { StyleSheet, View, Image, SafeAreaView } from 'react-native';
 import { Button, Avatar, Text, Card } from 'react-native-elements';
 
 import FixedHeader from '../components/FixedHeader';
@@ -33,14 +33,14 @@ function AddressResultScreen({ navigation }) {
   return (
     <View style={styles.container}>
       <FixedHeader />
-      <View style={styles.content}>
+      <SafeAreaView style={styles.content}>
         <View style={styles.content}>
           <Avatar
             icon={{ name: MESSAG_ICONS[messageColour], type: 'font-awesome' }}
             rounded
             containerStyle={styles.avatar}
             avatarStyle={{ backgroundColor: MESSAG_COLOURS[messageColour] }}
-            size="large"/>
+            size="large" />
           <Text style={styles.titleText}>
             {canBuildMessage}
           </Text>
@@ -54,7 +54,7 @@ function AddressResultScreen({ navigation }) {
               <Image
                 source={require('../../assets/map.png')}
                 resizeMode='cover'
-                style= {styles.image}
+                style={styles.image}
               />
             </View>
           </Card>
@@ -66,7 +66,7 @@ function AddressResultScreen({ navigation }) {
             containerStyle={styles.buttonBackCont}
           />
         </View>
-      </View>
+      </SafeAreaView>
     </View>
   )
 }
@@ -128,7 +128,7 @@ const styles = StyleSheet.create({
   },
   imageContainer: {
   },
-   image: {
+  image: {
     height: 150,
   }
 });

@@ -1,14 +1,14 @@
 import React from 'react';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, SafeAreaView } from 'react-native';
 import FixedHeader from '../components/FixedHeader';
 import { Header } from 'react-native/Libraries/NewAppScreen';
 
 function HomeScreen() {
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <FixedHeader />
       <Header />
-    </View>
+    </SafeAreaView>
   )
 }
 

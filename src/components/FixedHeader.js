@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet, View, Text } from 'react-native';
 import { Header } from 'react-native-elements';
-import MenuButton from  './MenuButton';
+import MenuButton from './MenuButton';
 import ImageBar from './ImageBar';
 
 function FixedHeader() {
@@ -9,7 +9,7 @@ function FixedHeader() {
     <View >
       <Header
         containerStyle={styles.header}
-        backgroundColor= '#424242'
+        backgroundColor='#424242'
         barStyle='light-content'
         placement="left"
         leftComponent={<MenuButton />}
@@ -22,7 +22,7 @@ function FixedHeader() {
 
 const styles = StyleSheet.create({
   header: {
-    height: 80,
+    height: 100,
     shadowColor: "#000",
     shadowOffset: {
       width: 0,

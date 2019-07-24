@@ -1,9 +1,8 @@
 import React from 'react';
 
 import { StyleSheet, View, TouchableOpacity, ScrollView, Text } from 'react-native';
-import { Input } from 'react-native-elements';
+import { Input, Icon } from 'react-native-elements';
 import { GoogleAutoComplete } from 'react-native-google-autocomplete';
-import Icon from 'react-native-vector-icons/FontAwesome';
 
 import { GOOGLE_API_KEY } from '../../secrets';
 import * as helpers from '../helpers/helpers';
@@ -22,7 +21,7 @@ function GoogleInput({ address, setGoogleAddressResp, setAddress }) {
   const handlePress = (el, fetchDetails, clearSearchs) => {
     const { place_id, description } = el;
     const formatedRes = getGoogleAddress(place_id, fetchDetails);
-    
+
     clearSearchs();
     setAddress(description)
     setGoogleAddressResp(formatedRes);
@@ -49,9 +48,9 @@ function GoogleInput({ address, setGoogleAddressResp, setAddress }) {
                   fetchDetails={fetchDetails}
                   key={String(i)}
                   onPress={() => handlePress(el, fetchDetails, clearSearchs)}
-                  >
+                >
                   <Icon
-                    name='map-marker'
+                    name='pin-drop'
                     size={24}
                     color='#5C5C5C'
                     style={{ marginRight: 10 }}

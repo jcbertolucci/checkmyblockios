@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, View, KeyboardAvoidingView } from 'react-native';
+import { StyleSheet, Text, View, KeyboardAvoidingView, SafeAreaView } from 'react-native';
 import { Button, Avatar } from 'react-native-elements';
+import Geolocation from '@react-native-community/geolocation';
 
 import FixedHeader from '../components/FixedHeader';
 import GoogleInput from '../components/GoogleInput';
@@ -19,19 +20,20 @@ function PlanningScreen({ navigation }) {
   hooks.useNavigateAfterApiResponse(resconRules, navigation)
 
   const getLocationAsync = async () => {
-    /* const { status } = await Permissions.askAsync(Permissions.LOCATION);
-    if (status !== 'granted') return; */
-
     setLocatLoading(true);
-    try {
-      /* const location = await Location.getCurrentPositionAsync({});
-      const { latitude, longitude } = location.coords; */
-      const address = await apiGoogle.getAddressFromCoordinates(latitude, longitude);
 
-      setAddress(address);
-    } catch (error) {
-      console.log(error);
-    }
+    Geolocation.getCurrentPosition(
+      position => {
+        const { coords } = position;
+        const { latitude, longitude } = coords;
+        apiGoogle.getAddressFromCoordinates(latitude, longitude)
+          .then(address => setAddress(address))
+          .catch(error => console.log(error));
+      },
+      error => Alert.alert('Error', JSON.stringify(error)),
+      { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 },
+    );
+
     setLocatLoading(false);
   };
 
@@ -40,7 +42,7 @@ function PlanningScreen({ navigation }) {
     try {
       const { label, value } = await api.getAddress(address);
       const resconResp = await api.getPlanningRules(label, value, googleAddressResp);
-      const { landingZone, spatial, lot, applicationType } = resconResp;     
+      const { landingZone, spatial, lot, applicationType } = resconResp;
 
       setResconRules({ applicationType, landingZone, spatial, lot, fullAddress: label });
     } catch (error) {
@@ -60,42 +62,42 @@ function PlanningScreen({ navigation }) {
   return (
     <View style={styles.container}>
       <FixedHeader />
+      <SafeAreaView style={styles.content}>
         <View style={styles.content}>
-          <View style={styles.content}>
-            <Avatar
-              rounded
-              title="1"
-              containerStyle={styles.avatar}
-              avatarStyle={styles.avatarIcon}
-              size="large"/>
-            <Text style={styles.titleText}>Check your address</Text>
-          </View>
-          <KeyboardAvoidingView style={styles.contentBottom} behavior="padding" enabled>
-            <GoogleInput
-              address={address}
-              setGoogleAddressResp={setGoogleAddressResp}
-              setAddress={setAddress}
-            />
-            <Button
-              loading={isLocatLoading}
-              onPress={() => handelPressLocation()}
-              title="Get my location"
-              type="clear"
-              containerStyle={styles.buttonLocation}
-              titleStyle={styles.textLeft}
-            />
-            <Button
-              loading={isNextLoading}
-              disabled={!address || !!isNextLoading ? true : false}
-              title="Next"
-              onPress={() => handlePressNext()}
-              buttonStyle={styles.buttonNext}
-              titleStyle={styles.buttonNextTitle}
-              containerStyle={styles.buttonNextCont}
-            />
-          </KeyboardAvoidingView>
+          <Avatar
+            rounded
+            title="1"
+            containerStyle={styles.avatar}
+            avatarStyle={styles.avatarIcon}
+            size="large" />
+          <Text style={styles.titleText}>Check your address</Text>
         </View>
-    </View>
+        <KeyboardAvoidingView style={styles.contentBottom} behavior="padding" enabled>
+          <GoogleInput
+            address={address}
+            setGoogleAddressResp={setGoogleAddressResp}
+            setAddress={setAddress}
+          />
+          <Button
+            loading={isLocatLoading}
+            onPress={() => handelPressLocation()}
+            title="Get my location"
+            type="clear"
+            containerStyle={styles.buttonLocation}
+            titleStyle={styles.textLeft}
+          />
+          <Button
+            loading={isNextLoading}
+            disabled={!address || !!isNextLoading ? true : false}
+            title="Next"
+            onPress={() => handlePressNext()}
+            buttonStyle={styles.buttonNext}
+            titleStyle={styles.buttonNextTitle}
+            containerStyle={styles.buttonNextCont}
+          />
+        </KeyboardAvoidingView>
+      </SafeAreaView>
+    </View >
   )
 }
 
